@@ -23,19 +23,15 @@ public class FootballPlayerController {
     }
 
     @PostMapping("/create")
-    public String createPlayer(
-            @ModelAttribute("player") FootballPlayer footballPlayer,
-            RedirectAttributes redirectAttributes) {
-        footballPlayer.setId((int)(Math.random() *1000));
-         footballPlayerService.create(footballPlayer);
-         redirectAttributes.addFlashAttribute("message", "Player created successfully");
-         return "redirect:/";
+    public String createPlayer(@ModelAttribute("player") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
+        footballPlayer.setId((int) (Math.random() * 1000));
+        footballPlayerService.create(footballPlayer);
+        redirectAttributes.addFlashAttribute("message", "Player created successfully");
+        return "redirect:/";
     }
 
     @PostMapping("/update/{id}")
-    public String updatePlayer(
-            @ModelAttribute("player") FootballPlayer footballPlayer,
-            RedirectAttributes redirectAttributes) {
+    public String updatePlayer(@ModelAttribute("player") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
         footballPlayerService.save(footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player update successfully");
         return "redirect:/update";
@@ -43,12 +39,12 @@ public class FootballPlayerController {
 
     @GetMapping("/detail/{id}")
     public String detailPlayer(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("player" , footballPlayerService.findById(id));
+        model.addAttribute("player", footballPlayerService.findById(id));
         return "/detail";
     }
 
-    @GetMapping ("/delete")
-    public String deletePlayer(@RequestParam("idDelete") Integer id,RedirectAttributes redirectAttributes) {
+    @GetMapping("/delete")
+    public String deletePlayer(@RequestParam("idDelete") Integer id, RedirectAttributes redirectAttributes) {
         this.footballPlayerService.delete(id);
         redirectAttributes.addFlashAttribute("message", "Player deleted successfully");
         return "redirect:/";
