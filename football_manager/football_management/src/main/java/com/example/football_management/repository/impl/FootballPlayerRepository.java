@@ -28,7 +28,7 @@ public class FootballPlayerRepository implements IFootballPlayerRepository {
     }
 
     @Override
-    public FootballPlayer playerFindById(int id) {
+    public FootballPlayer findById(int id) {
         for (int i = 0; i < flayers.size(); i++) {
             if (flayers.get(i).getId() == id)
                 return flayers.get(i);
@@ -43,6 +43,6 @@ public class FootballPlayerRepository implements IFootballPlayerRepository {
 
     @Override
     public void delete(int id) {
-       flayers.remove(playerFindById(id));
+       flayers.remove(findById(id));
         }
     }

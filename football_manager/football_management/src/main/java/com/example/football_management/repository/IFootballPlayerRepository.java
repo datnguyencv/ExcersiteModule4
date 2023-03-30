@@ -7,7 +7,7 @@ import java.util.List;
 public interface IFootballPlayerRepository {
     List<FootballPlayer> findAll();
 
-    FootballPlayer playerFindById(int id);
+    FootballPlayer findById(int id);
 
     void create(FootballPlayer footballPlayer);
 

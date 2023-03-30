@@ -5,10 +5,9 @@ import com.example.football_management.service.IFootballPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/football-management")
@@ -23,16 +22,18 @@ public class FootballPlayerController {
         return "/list";
     }
 
-//    @PostMapping("")
-//    public FootballPlayer createPlayer(Model model) {
-//        model.addAttribute("footballPlayer" , footballPlayer);
-//        footballPlayerService.create(FootballPlayer);
-//        return "/create";
-//    }
+    @PostMapping("/create")
+    public String createPlayer(
+            @ModelAttribute("newPlayer") FootballPlayer footballPlayer,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+         footballPlayerService.create(footballPlayer);
+         redirectAttributes.addFlashAttribute("message", "Player created successfully");
+         return "redirect:/";
+    }
 
     @GetMapping("/detail/{id}")
     public String detailPlayer(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("player" , footballPlayerService.playerFindById(id));
+        model.addAttribute("player" , footballPlayerService.findById(id));
         return "/detail";
     }
 

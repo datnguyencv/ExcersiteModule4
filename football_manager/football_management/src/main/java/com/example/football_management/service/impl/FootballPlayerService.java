@@ -18,8 +18,8 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
-    public FootballPlayer playerFindById(int id) {
-        return footballPlayerRepository.playerFindById(id);
+    public FootballPlayer findById(int id) {
+        return footballPlayerRepository.findById(id);
     }
 
     @Override
