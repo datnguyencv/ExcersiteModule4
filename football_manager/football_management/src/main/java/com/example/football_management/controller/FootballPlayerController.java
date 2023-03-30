@@ -32,8 +32,7 @@ public class FootballPlayerController {
 
     @GetMapping("/detail/{id}")
     public String detailPlayer(@PathVariable("id") Integer id, Model model) {
-        FootballPlayer footballPlayer = footballPlayerService.playerFindById(id);
-        model.addAttribute("footballPlayer" , footballPlayer);
+        model.addAttribute("player" , footballPlayerService.playerFindById(id));
         return "/detail";
     }
 

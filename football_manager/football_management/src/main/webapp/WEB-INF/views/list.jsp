@@ -32,7 +32,7 @@
             <td>${player.experience}</td>
             <td>${player.position}</td>
             <td><img src="${player.img}" alt=""></td>
-            <td><button class="btn btn-primary btn-sm" href="/football-management/detail/${player.id}">Detail player</button></td>
+            <td><button class="btn btn-primary btn-sm"><a href="/football-management/detail/${player.id}">Detail player</a> </button></td>
             <td>                    <button type="button" onclick="infoDelete(${player.id},'${player.name}')"
                                             class="btn btn-danger btn-sm"
                                             data-toggle="modal" data-target="#exampleModal">
