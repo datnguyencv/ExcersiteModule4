@@ -11,5 +11,5 @@ public interface IFootballPlayerService {
 
     void create(FootballPlayer footballPlayer);
 
-    void delete(int id, FootballPlayer footballPlayer);
+    void delete(int id);
 }

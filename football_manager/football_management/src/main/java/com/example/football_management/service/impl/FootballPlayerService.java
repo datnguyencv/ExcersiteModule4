@@ -28,7 +28,7 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
-    public void delete(int id, FootballPlayer footballPlayer) {
-//        footballPlayerRepository.delete(id,footballPlayer);
+    public void delete(int id) {
+        footballPlayerRepository.delete(id);
     }
 }

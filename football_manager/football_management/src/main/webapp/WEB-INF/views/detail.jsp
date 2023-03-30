@@ -1,6 +1,7 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <head>
-    <title>Title</title>
+    <title>Football Player Detail</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -11,7 +12,7 @@
     }
 </style>
 <body>
-<h1 class="text-center" style="color: red">Detail</h1>
+<h1 class="text-center" style="color: red">Football Player Detail</h1>
 <p>ID Player: ${player.code}</p>
 <p>Name: ${player.name}</p>
 <p>Date Of Birth: ${player.dateOfBirth}</p>

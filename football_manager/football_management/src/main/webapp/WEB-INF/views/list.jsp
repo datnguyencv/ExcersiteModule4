@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Football Management List</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -32,10 +32,45 @@
             <td>${player.experience}</td>
             <td>${player.position}</td>
             <td><img src="${player.img}" alt=""></td>
-<%--            <td><button class="btn btn-primary btn-sm" href="/soccer-player/detail/${player.id}">Detail person</button></td>--%>
+            <td><button class="btn btn-primary btn-sm" href="/football-management/detail/${player.id}">Detail player</button></td>
+            <td>                    <button type="button" onclick="infoDelete(${player.id},'${player.name}')"
+                                            class="btn btn-danger btn-sm"
+                                            data-toggle="modal" data-target="#exampleModal">
+                Delete
+            </button></td>
         </tr>
     </c:forEach>
 </table>
+<%--Modal--%>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Box</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/football-management/delete">
+                <div class="modal-body">
+                    <input hidden type="text" id="idDelete" name="idDelete">
+                    <span>You may want to delete </span><span style="color: red" class="fw-bolder"
+                                                              id="nameDelete"></span> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
