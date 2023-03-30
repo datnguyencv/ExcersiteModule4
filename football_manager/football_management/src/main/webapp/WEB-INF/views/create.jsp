@@ -12,18 +12,19 @@
     }
 </style>
 <body>
-<form:form action="/football-management/create" method="post" modelAttribute="newPlayer">
+<form:textarea path="message">
+<form:form modelAttribute="footballPlayer" action="/create" method="post" >
 <div class="form-group">
     <label for="name"></label>
     <form:input type="text" clss="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Name" path="name"/>
-    <label for="name"></label>
-    <form:input type="text" class="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Date of birth" path="dateOfBirth"/>
-    <label for="name"></label>
-    <form:input type="text" class="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Experience" path="experience"/>
-    <label for="name"></label>
-    <form:input type="text" class="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Position" path="position"/>
-    <label for="name"></label>
-    <form:input type="text" class="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Url-Img" path="img"/>
+    <label for="dateOfBirth"></label>
+    <form:input type="text" class="form-control" form="dateOfBirth" id="dateOfBirth" aria-describedby="helpId" placeholder="Please Enter Date of birth" path="dateOfBirth"/>
+    <label for="experience"></label>
+    <form:input type="text" class="form-control" form="experience" id="experience" aria-describedby="helpId" placeholder="Please Enter Experience" path="experience"/>
+    <label for="position"></label>
+    <form:input type="text" class="form-control" form="position" id="position" aria-describedby="helpId" placeholder="Please Enter Position" path="position"/>
+    <label for="img"></label>
+    <form:input type="text" class="form-control" form="img" id="img" aria-describedby="helpId" placeholder="Please Enter Url-Img" path="img"/>
 </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form:form>

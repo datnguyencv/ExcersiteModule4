@@ -24,12 +24,12 @@ public class FootballPlayerService implements IFootballPlayerService {
 
     @Override
     public void create(FootballPlayer footballPlayer) {
-        this.footballPlayerRepository.create(footballPlayer);
+
     }
 
     @Override
     public void save(int id, FootballPlayer footballPlayer) {
-        this.footballPlayerRepository.save(footballPlayer.getId(),footballPlayer);
+
     }
 
     @Override

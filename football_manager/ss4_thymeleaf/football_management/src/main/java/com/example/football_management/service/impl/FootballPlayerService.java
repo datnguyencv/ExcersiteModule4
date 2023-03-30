@@ -28,12 +28,17 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
-    public void save(int id, FootballPlayer footballPlayer) {
-        this.footballPlayerRepository.save(footballPlayer.getId(),footballPlayer);
+    public void save(FootballPlayer footballPlayer) {
+        this.footballPlayerRepository.save(footballPlayer);
     }
 
     @Override
     public void delete(int id) {
         footballPlayerRepository.delete(id);
+    }
+
+    @Override
+    public List<FootballPlayer> findByName(String name) {
+        return this.footballPlayerRepository.findByName(name);
     }
 }

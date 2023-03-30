@@ -1,7 +1,7 @@
 <%@ taglib prefix="" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <head>
-    <title>Update Player</title>
+    <title>Create New Player</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -12,7 +12,7 @@
     }
 </style>
 <body>
-<form:form action="/football-management/update" method="post" modelAttribute="footballPlayer">
+<form:form action="/football-management/create" method="post" modelAttribute="newPlayer">
 <div class="form-group">
     <label for="name"></label>
     <form:input type="text" clss="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Name" path="name"/>

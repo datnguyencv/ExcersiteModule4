@@ -5,7 +5,6 @@ import com.example.football_management.service.IFootballPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,27 +16,29 @@ public class FootballPlayerController {
     private IFootballPlayerService footballPlayerService;
 
     @GetMapping("")
-    public String PlayerList(Model model) {
+    public String getHome(Model model) {
         model.addAttribute("footballPlayerList", footballPlayerService.findAll());
-        return "/list";
+        model.addAttribute("footballPlayer", new FootballPlayer());
+        return "/index";
     }
 
     @PostMapping("/create")
     public String createPlayer(
-            @ModelAttribute FootballPlayer footballPlayer,
+            @ModelAttribute("player") FootballPlayer footballPlayer,
             RedirectAttributes redirectAttributes) {
+        footballPlayer.setId((int)(Math.random() *1000));
          footballPlayerService.create(footballPlayer);
          redirectAttributes.addFlashAttribute("message", "Player created successfully");
          return "redirect:/";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     public String updatePlayer(
-            @ModelAttribute FootballPlayer footballPlayer,
+            @ModelAttribute("player") FootballPlayer footballPlayer,
             RedirectAttributes redirectAttributes) {
-        footballPlayerService.save(footballPlayer.getId(),footballPlayer);
+        footballPlayerService.save(footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player update successfully");
-        return "redirect:/";
+        return "redirect:/update";
     }
 
     @GetMapping("/detail/{id}")
@@ -47,8 +48,15 @@ public class FootballPlayerController {
     }
 
     @GetMapping ("/delete")
-    public String deletePlayer(@RequestParam("idDelete") Integer id) {
+    public String deletePlayer(@RequestParam("idDelete") Integer id,RedirectAttributes redirectAttributes) {
         this.footballPlayerService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Player deleted successfully");
         return "redirect:/";
+    }
+
+    @GetMapping("/search")
+    public String searchPlayer(@RequestParam("name") String name, Model model) {
+        model.addAttribute("playerList", footballPlayerService.findByName(name));
+        return "/index";
     }
 }

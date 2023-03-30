@@ -24,8 +24,8 @@ public class FootballPlayerController {
 
     @PostMapping("/create")
     public String createPlayer(
-            @ModelAttribute FootballPlayer footballPlayer,
-            RedirectAttributes redirectAttributes) {
+            @ModelAttribute("newPlayer") FootballPlayer footballPlayer,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
          footballPlayerService.create(footballPlayer);
          redirectAttributes.addFlashAttribute("message", "Player created successfully");
          return "redirect:/";
@@ -33,8 +33,8 @@ public class FootballPlayerController {
 
     @PostMapping("/update")
     public String updatePlayer(
-            @ModelAttribute FootballPlayer footballPlayer,
-            RedirectAttributes redirectAttributes) {
+            @ModelAttribute("savePlayer") FootballPlayer footballPlayer,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         footballPlayerService.save(footballPlayer.getId(),footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player update successfully");
         return "redirect:/";

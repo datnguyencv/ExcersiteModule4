@@ -12,7 +12,7 @@
     }
 </style>
 <body>
-<form:form action="/football-management/update" method="post" modelAttribute="footballPlayer">
+<form:form action="/football-management/create" method="post" modelAttribute="savePlayer">
 <div class="form-group">
     <label for="name"></label>
     <form:input type="text" clss="form-control" form="name" id="name" aria-describedby="helpId" placeholder="Please Enter Name" path="name"/>
