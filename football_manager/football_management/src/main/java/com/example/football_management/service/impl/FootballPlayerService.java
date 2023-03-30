@@ -28,6 +28,11 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
+    public void save(int id, FootballPlayer footballPlayer) {
+
+    }
+
+    @Override
     public void delete(int id) {
         footballPlayerRepository.delete(id);
     }

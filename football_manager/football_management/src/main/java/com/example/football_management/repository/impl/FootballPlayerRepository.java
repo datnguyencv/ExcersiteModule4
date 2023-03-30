@@ -42,6 +42,11 @@ public class FootballPlayerRepository implements IFootballPlayerRepository {
     }
 
     @Override
+    public void save(int id, FootballPlayer footballPlayer) {
+
+    }
+
+    @Override
     public void delete(int id) {
        flayers.remove(findById(id));
         }

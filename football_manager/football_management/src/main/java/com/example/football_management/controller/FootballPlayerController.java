@@ -31,6 +31,15 @@ public class FootballPlayerController {
          return "redirect:/";
     }
 
+    @PostMapping("/update")
+    public String updatePlayer(
+            @ModelAttribute("savePlayer") FootballPlayer footballPlayer,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        footballPlayerService.save(footballPlayer.getId(),footballPlayer);
+        redirectAttributes.addFlashAttribute("message", "Player update successfully");
+        return "redirect:/";
+    }
+
     @GetMapping("/detail/{id}")
     public String detailPlayer(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("player" , footballPlayerService.findById(id));
