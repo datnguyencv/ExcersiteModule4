@@ -1,4 +1,4 @@
-package com.example.football_management.controller;
+    package com.example.football_management.controller;
 
 import com.example.football_management.model.FootballPlayer;
 import com.example.football_management.service.IFootballPlayerService;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/football-management")
-public class FootballPlayerController {
+class FootballPlayerController {
 
     @Autowired
     private IFootballPlayerService footballPlayerService;
@@ -24,9 +24,11 @@ public class FootballPlayerController {
 
     @PostMapping("/create")
     public String createPlayer(@ModelAttribute("footballPlayer") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
-        footballPlayer.setId((int) (Math.random() * 1000));
-        footballPlayerService.create(footballPlayer);
-        redirectAttributes.addFlashAttribute("message", "Player created successfully");
+        if (footballPlayerService.create(footballPlayer)) {
+            redirectAttributes.addFlashAttribute("message", "Player created successfully");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Player not created");
+        }
         return "redirect:/";
     }
 
@@ -49,7 +51,6 @@ public class FootballPlayerController {
         redirectAttributes.addFlashAttribute("message", "Player deleted successfully");
         return "redirect:/";
     }
-
     @GetMapping("/search")
     public String searchPlayer(@RequestParam("name") String name, Model model) {
         model.addAttribute("playerList", footballPlayerService.findByName(name));

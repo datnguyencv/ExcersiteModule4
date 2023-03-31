@@ -11,7 +11,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<navbar th:replace="/layout :: navbar"></navbar>
+<nav th:replace="/view/layout :: navbar"></nav>
 <h1 class="text-center" style="color: red">Football-Player Management</h1>
 <p th:text="${#messages}"></p>
 <button type="button" class="btn b  tn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
@@ -42,14 +42,13 @@
             <td th:text="${player.getDateOfBirth()}"></td>
             <td th:text="${player.getExperience()}"></td>
             <td th:text="${player.getPosition()}"></td>
-            <td><img th:src="${player.getImg()}" alt=""></td>
+            <td th:src="${player.getImg()}" th:width="200px"></td>
             <td><a href="@{/football-management/update/{id}(id=${player.getId()})}">
                 <button class="btn btn-primary btn-sm">
                 Update</button>
                 </a></td>
-            <td><button type="button" th:onclick="|info('${player.getId()}','${player.name()}')|"
-                                            class="btn btn-danger btn-sm"
-                                            data-toggle="modal" data-target="#exampleModal">
+            <td><button type="button" th:attr="onclick=|info('${player.getId()}','${player.name()}')|"
+                        lass="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Delete
             </button></td>
             <td>
@@ -133,6 +132,7 @@
         </div>
     </div>
 </div>
+<footer th:replace="/view/layout :: footer"></footer>
 <script>
     function info(id, name) {
         document.getElementById("idDelete").value = id;
