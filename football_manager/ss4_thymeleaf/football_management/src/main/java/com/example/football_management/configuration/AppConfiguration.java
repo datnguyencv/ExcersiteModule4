@@ -7,15 +7,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.example")
-public class AppConfiguration implements ApplicationContextAware {
+public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
+
     private ApplicationContext applicationContext;
 
     @Override
@@ -23,9 +26,8 @@ public class AppConfiguration implements ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
 
-    //Cau hinh Thymeleaf
     @Bean
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views");
@@ -36,11 +38,12 @@ public class AppConfiguration implements ApplicationContextAware {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+    public TemplateEngine templateEngine() {
+        TemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;
     }
+
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -48,4 +51,5 @@ public class AppConfiguration implements ApplicationContextAware {
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
+
 }

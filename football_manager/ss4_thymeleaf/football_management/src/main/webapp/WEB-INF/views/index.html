@@ -13,8 +13,8 @@
 <body>
 <navbar th:replace="/layout :: navbar"></navbar>
 <h1 class="text-center" style="color: red">Football-Player Management</h1>
-<p th:text="${message}"></p>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+<!--<p th:text="${#messages}"></p>-->
+<button type="button" class="btn b  tn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
     Add new FootballPlayer
 </button>
 <table class="table table-striped able-bordered table-hover">
@@ -35,7 +35,7 @@
     </thead>
     <tbody>
 
-        <tr th:each="player, item : ${playerList}">
+        <tr th:each="player, item : ${footballPlayerList}">
             <td th:text="${item.count}"></td>
             <td th:text="${player.getId()}"></td>
             <td th:text="${player.getName()}"></td>
@@ -45,7 +45,7 @@
             <td><img th:src="${player.getImg()}" alt=""></td>
             <td><a href="@{/football-management/update/{id}(id=${player.getId()})}">
                 <button class="btn btn-primary btn-sm">
-                Edit</button>
+                Update</button>
                 </a></td>
             <td><button type="button" th:onclick="|info('${player.getId()}','${player.name()}')|"
                                             class="btn btn-danger btn-sm"
@@ -70,7 +70,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/football-management/create}" th:object="${player}" method="post">
+                <form th:action="@{/football-management/create}" th:object="${footballPlayer}" method="post">
                     <div class="mb-3">
                         <input type="hidden" th:field="*{id}" class="form-control" id="exampleInputEmail1"
                                aria-describedby="emailHelp">
