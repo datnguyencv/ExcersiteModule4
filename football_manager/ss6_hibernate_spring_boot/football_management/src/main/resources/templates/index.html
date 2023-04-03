@@ -1,0 +1,179 @@
+<!doctype html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Football Management</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="layout.html :: navbar"></div>
+<h1 class="text-center p-2" style="color: mediumblue">Football-Player Management</h1>
+<!--<p th:text="${#messages}"></p>-->
+<button type="button" class="btn b  tn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+    Add new FootballPlayer
+</button>
+<form class="form-inline my-2 my-lg-0 mt-auto mr-2">
+    <label for="page"></label>
+    <input class="form-control mr-sm-2" type="text" id="page" name="page" placeholder="Please enter Page size">
+    <small id="helpId" class="form-text text-muted">Default value 5 item per page</small>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+</form>
+<p th:text="${message}" style="color: red"></p>
+<table class="table table-striped able-bordered table-hover">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Date Of Birth</th>
+        <th>Experience</th>
+        <th>Position</th>
+        <th>Avatar</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="player, count:${footballPlayerList}">
+        <td th:text="${count.count}"></td>
+        <td th:text="${player.getId()}"></td>
+        <td th:text="${player.getName()}"></td>
+        <td th:text="${player.getDateOfBirth()}"></td>
+        <td th:text="${player.getExperience()}"></td>
+        <td th:text="${player.getPosition()}"></td>
+        <td><img th:src="${player.getImg()}" th:height="200px" alt="None">
+        <td>
+            <a th:href="@{/football-management/update/{id}(id=${player.getId()})}">
+                <button class="btn btn-primary btn-sm">Update</button>
+            </a>
+        </td>
+        <td>
+            <button type="button" th:attr="onclick=|info('${player.getId()}','${player.getName()}')|"
+                    class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+        </td>
+        <td>
+            <a th:href="@{/football-management/detail/{id}(id=${player.getId()})}">
+                <button type="submit" class="btn btn-secondary btn-sm">Detail</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="text-center" id="random1">
+    <a class="page-item btn btn-dark active1" th:if="${footballPlayerList.hasPrevious()}"
+       th:href="@{/football-management(page = ${footballPlayerList.number - 1}, name = ${name})}">
+        <i class="ti-angle-left">Previous</i>
+    </a>
+
+    <a class="page-item number btn btn-dark active1"
+       th:classappend="${pageNumber == footballPlayerList.number + 1} ? 'active' : ''"
+       th:each="pageNumber : ${pageNumberList}"
+       th:href="@{/football-management(page = ${pageNumber - 1},name = ${name})}"
+       th:text="${pageNumber}">
+    </a>
+
+    <a class="page-item btn btn-dark active1" th:if="${footballPlayerList.hasNext()}"
+       th:href="@{/football-management(page = ${footballPlayerList.number + 1}, name =${name})}">
+        <i class="ti-angle-right">Next</i>
+    </a>
+</div>
+<!--Modal create-->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel2">Create new FootballPlayer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/football-management/create}" th:object="${footballPlayer}" method="post">
+                    <div class="mb-3">
+                        <input type="hidden" th:field="*{id}" class="form-control" id="exampleInputEmail1"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" id="exampleInputEmail2"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Birthday</label>
+                        <input type="text" th:field="*{dateOfBirth}" class="form-control" id="exampleInputEmail3"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Experience</label>
+                        <input type="text" th:field="*{experience}" class="form-control" id="exampleInputEmail4"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Position</label>
+                        <input type="text" th:field="*{position}" class="form-control" id="exampleInputEmail15"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Avatar</label>
+                        <input type="text" th:field="*{img}" class="form-control" id="exampleInputEmail6"
+                               aria-describedby="emailHelp">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<%Modal Delete>-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Box</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/football-management/delete">
+                <div class="modal-body">
+                    <input hidden type="text" id="idDelete" name="idDelete">
+                    <span>You may want to delete </span><span style="color: red" class="fw-bolder"
+                                                              id="nameDelete"></span> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="layout.html :: footer"></div>
+</body>
+<script>
+    function info(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</html>
