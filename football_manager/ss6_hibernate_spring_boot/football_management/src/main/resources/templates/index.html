@@ -13,16 +13,30 @@
 <body>
 <div th:replace="layout.html :: navbar"></div>
 <h1 class="text-center p-2" style="color: mediumblue">Football-Player Management</h1>
-<!--<p th:text="${#messages}"></p>-->
-<button type="button" class="btn b  tn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+<p th:text="${#messages}"></p>
+<!-- Button trigger modal -->
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
     Add new FootballPlayer
 </button>
-<form class="form-inline my-2 my-lg-0 mt-auto mr-2">
+<span>
+    <form class="form-inline my-2 my-lg-0 mt-auto mr-2">
     <label for="page1"></label>
     <input class="form-control mr-sm-2" type="text" id="page1" name="pageSizeInput" placeholder="Please enter Page size">
     <small id="helpId1" class="form-text text-muted">Default value 5 item per page</small>
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+    </form>
+</span>
+<span>
+    <form th:action="@{/football-management(page = ${footballPlayerList.number - 1}, name = ${nameSearch})}" method="get">
+    <label for="from">From:</label>
+    <input class="form-control mr-sm-2" type="date" pattern="yyyy-MM-dd" id="from" name="from">
+    <label for="to">To:</label>
+    <input class="form-control mr-sm-2" type="date" id="to" name="to"><br><br>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
 </form>
+</span>
+
 <p th:text="${message}" style="color: red"></p>
 <table class="table table-striped able-bordered table-hover">
     <thead>
@@ -68,25 +82,24 @@
 </table>
 <div class="text-center" id="random1">
     <a class="page-item btn btn-dark active1" th:if="${footballPlayerList.hasPrevious()}"
-       th:href="@{/football-management(page = ${footballPlayerList.number - 1}, name = ${name})}">
+       th:href="@{/football-management(page = ${footballPlayerList.number - 1}, name = ${nameSearch}, pageSizeInput=${pageSize})}">
         <i class="ti-angle-left">Previous</i>
     </a>
 
     <a class="page-item number btn btn-dark active1"
        th:classappend="${pageNumber == footballPlayerList.number + 1} ? 'active' : ''"
        th:each="pageNumber : ${pageNumberList}"
-       th:href="@{/football-management(page = ${pageNumber - 1},name = ${name})}"
+       th:href="@{/football-management(page = ${pageNumber - 1},name = ${nameSearch}, pageSizeInput=${pageSize})}"
        th:text="${pageNumber}">
     </a>
 
     <a class="page-item btn btn-dark active1" th:if="${footballPlayerList.hasNext()}"
-       th:href="@{/football-management(page = ${footballPlayerList.number + 1}, name =${name})}">
+       th:href="@{/football-management(page = ${footballPlayerList.number + 1}, name =${nameSearch}, pageSizeInput=${pageSize})}">
         <i class="ti-angle-right">Next</i>
     </a>
     <form class="form-inline my-2 my-lg-0 mt-auto mr-2">
         <label for="page"></label>
-        <input class="form-control mr-sm-2" type="text" id="page" name="page" placeholder="Please enter Page size">
-        <small id="helpId" class="form-text text-muted">Default value 5 item per page</small>
+        <input class="form-control mr-sm-2" type="number" id="page" name="page" placeholder="Please enter Page size">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
     </form>
 </div>

@@ -12,8 +12,7 @@
 </head>
 <body>
 <navbar th:replace="/layout :: navbar"></navbar>
-
-<h2>Form Update Football Player</h2>
+<h1 class="text-center p-2" style="color: mediumblue">Form Update Football Player</h1>
 <p th:text="${message}" style="color: red"></p>
 <form id="form" th:action="@{/football-management/update}" th:object="${footballPlayer}" method="post">
 <div class="form-group">
@@ -35,6 +34,12 @@
     <label for="name"></label>
     <input type="text"
            class="form-control" th:field="*{position}" id="position" aria-describedby="helpId" placeholder="Please enter Position">
+</div>
+<div class="form-group">
+    <label  class="form-label">Team</label>
+    <select th:field="*{teams}"  class="form-select" aria-label="Default select example">
+        <option th:each="teams: ${teams}" th:text="${teams.getName()}" th:value="${teams.getId()}"></option>
+    </select>
 </div>
 <div class="form-group">
     <label for="name"></label>

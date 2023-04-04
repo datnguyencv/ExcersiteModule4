@@ -18,6 +18,9 @@ public class FootballPlayer {
     private String position;
     @Column
     private String img;
+    @ManyToOne
+    @JoinColumn(name = "teams_id")
+    private Teams teams;
 
     public FootballPlayer() {
     }
@@ -29,6 +32,14 @@ public class FootballPlayer {
         this.experience = experience;
         this.position = position;
         this.img = img;
+    }
+
+    public Teams getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Teams teams) {
+        this.teams = teams;
     }
 
     public Integer getId() {

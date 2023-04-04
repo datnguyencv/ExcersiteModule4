@@ -14,14 +14,13 @@ public class FootballPlayerService implements IFootballPlayerService {
     private IFootballPlayerRepository footballPlayerRepository;
 
     @Override
-    public Page<FootballPlayer> findByName(String name, Pageable pageable) {
-        return footballPlayerRepository.findAllByNameContaining(name, pageable);
+    public Page<FootballPlayer> findByDateOfBirthBetweenAndNameContaining(String fromStr, String toStr, String name, Pageable pageable) {
+        return footballPlayerRepository.findByDateOfBirthBetweenAndNameContaining(fromStr,toStr,name, pageable);
     }
 
     @Override
-    public Page<FootballPlayer> findAllByNames(Pageable pageable) {
-        return this.footballPlayerRepository.findAll(pageable);
-    }
+    public Page<FootballPlayer> findAllByNames(String name, Pageable pageable) {
+        return this.footballPlayerRepository.findByNameContaining(name, pageable);    }
 
     @Override
     public FootballPlayer findById(int id) {

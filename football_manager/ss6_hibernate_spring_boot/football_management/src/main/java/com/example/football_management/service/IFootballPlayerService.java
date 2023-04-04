@@ -14,6 +14,6 @@ public interface IFootballPlayerService {
 
     void delete(FootballPlayer footballPlayer);
 
-    Page<FootballPlayer> findByName(String name, Pageable pageable);
-    Page<FootballPlayer> findAllByNames(Pageable pageable);
+    Page<FootballPlayer> findByDateOfBirthBetweenAndNameContaining(String fromStr, String toStr, String name, Pageable pageable);
+    Page<FootballPlayer> findAllByNames(String name, Pageable pageable);
 }
