@@ -3,20 +3,20 @@ package com.example.football_management.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "footballplayer")
+@Table
 public class FootballPlayer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "dateOfBirth")
+    @Column
     private String dateOfBirth;
-    @Column(name = "experience")
+    @Column
     private String experience;
-    @Column(name = "position")
+    @Column
     private String position;
-    @Column(name = "img")
+    @Column
     private String img;
 
     public FootballPlayer() {

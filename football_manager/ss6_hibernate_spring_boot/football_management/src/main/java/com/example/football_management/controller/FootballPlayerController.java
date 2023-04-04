@@ -3,16 +3,14 @@ package com.example.football_management.controller;
 import com.example.football_management.model.FootballPlayer;
 import com.example.football_management.service.IFootballPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,18 +22,33 @@ class FootballPlayerController {
     @Autowired
     private IFootballPlayerService footballPlayerService;
 
-    @GetMapping("/home")
+    @GetMapping("")
     public String getHome(Model model,
                           @RequestParam(required = false, defaultValue = "") String name,
+                          @RequestParam(required = false) Integer pageSizeInput,
                           @PageableDefault(size = 5) Pageable pageable) {
+
         Sort sort = name.isEmpty() ? Sort.by("dateOfBirth").ascending() : Sort.by("name").ascending();
+        int pageSize = pageable.getPageSize();
+        if (pageSizeInput != null && pageSizeInput > 0) {
+            pageSize = pageSizeInput;
+        }
         Page<FootballPlayer> footballPlayerPage = footballPlayerService
-                .findByName(name, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort));
+                .findByName(name, PageRequest.of(pageable.getPageNumber(), pageSize, sort));
         model.addAttribute("footballPlayerList", footballPlayerPage);
         model.addAttribute("footballPlayer", new FootballPlayer());
         List<Integer> pageNumberList = IntStream.rangeClosed(
                 1, footballPlayerPage.getTotalPages()).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumberList", pageNumberList);
+        int currentPage = pageable.getPageNumber() + 1;
+        int totalRecords = (int) footballPlayerPage.getTotalElements();
+
+        pageable = PageRequest.of(currentPage - 1, pageSize, sort);
+        Page<?> page = new PageImpl<>(Collections.emptyList(), pageable, totalRecords);
+
+        pageNumberList = IntStream.rangeClosed(1, page.getTotalPages()).boxed().collect(Collectors.toList());
+        model.addAttribute("pageNumberList", pageNumberList);
+
         return "/index";
     }
 
@@ -43,7 +56,6 @@ class FootballPlayerController {
     public String createPlayer(@ModelAttribute("footballPlayer") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
         footballPlayerService.create(footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player created successfully");
-
         return "redirect:/";
     }
 

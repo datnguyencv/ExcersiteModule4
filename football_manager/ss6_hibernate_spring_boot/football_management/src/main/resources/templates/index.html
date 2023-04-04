@@ -18,9 +18,9 @@
     Add new FootballPlayer
 </button>
 <form class="form-inline my-2 my-lg-0 mt-auto mr-2">
-    <label for="page"></label>
-    <input class="form-control mr-sm-2" type="text" id="page" name="page" placeholder="Please enter Page size">
-    <small id="helpId" class="form-text text-muted">Default value 5 item per page</small>
+    <label for="page1"></label>
+    <input class="form-control mr-sm-2" type="text" id="page1" name="pageSizeInput" placeholder="Please enter Page size">
+    <small id="helpId1" class="form-text text-muted">Default value 5 item per page</small>
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
 </form>
 <p th:text="${message}" style="color: red"></p>
@@ -54,7 +54,7 @@
         </td>
         <td>
             <button type="button" th:attr="onclick=|info('${player.getId()}','${player.getName()}')|"
-                    class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Delete
             </button>
         </td>
@@ -83,6 +83,12 @@
        th:href="@{/football-management(page = ${footballPlayerList.number + 1}, name =${name})}">
         <i class="ti-angle-right">Next</i>
     </a>
+    <form class="form-inline my-2 my-lg-0 mt-auto mr-2">
+        <label for="page"></label>
+        <input class="form-control mr-sm-2" type="text" id="page" name="page" placeholder="Please enter Page size">
+        <small id="helpId" class="form-text text-muted">Default value 5 item per page</small>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+    </form>
 </div>
 <!--Modal create-->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -164,6 +170,7 @@
         document.getElementById("nameDelete").innerText = name;
     }
 </script>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
