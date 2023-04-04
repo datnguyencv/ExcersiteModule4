@@ -67,23 +67,35 @@ class FootballPlayerController {
         pageNumberList = IntStream.rangeClosed(
                 1, page.getTotalPages()).boxed().collect(Collectors.toList());
         model.addAttribute("pageNumberList", pageNumberList);
+        model.addAttribute("teams", teamsService.findAll());
+        return "/index";
+    }
+
+    @GetMapping("/teams")
+    public String getTeams(Model model) {
+        model.addAttribute("teams", teamsService.findAll());
         return "/index";
     }
 
     @PostMapping("/create")
     public String createPlayer(@ModelAttribute("footballPlayer") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
-        teamsService.findAll();
         footballPlayerService.create(footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player created successfully");
         return "redirect:/";
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("footballPlayer", footballPlayerService.findById(id));
+        model.addAttribute("teams", teamsService.findAll());
+        return "/update";
+    }
     @PostMapping("/update")
     public String updatePlayer(@ModelAttribute("footballPlayer") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
         teamsService.findAll();
         footballPlayerService.update(footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player update successfully");
-        return "redirect:/update";
+        return "redirect:/";
     }
 
     @GetMapping("/detail/{id}")

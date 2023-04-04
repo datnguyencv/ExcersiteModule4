@@ -13,15 +13,16 @@
 <body>
 <div th:replace="/layout :: navbar"></div>
 <h1 class="text-center p-2" style="color: mediumblue">Football-Player Management</h1>
-<div class="card text-left">
-    <img class="card-img-top img-fluid mx-auto mh-50" style="width: 200px;" src="${player.img}" alt="">
+<div class="card text-left" th:object="${player}">
+    <img class="card-img-top img-fluid mx-auto mh-50" style="width: 200px;" th:src="*{img}" alt="">
     <div class="card-body mx-auto">
         <h4 class="card-title">Player Info</h4>
-        <p class="card-text">ID Player: ${player.id}</p>
-        <p class="card-text">Name: ${player.name}</p>
-        <p class="card-text">Date Of Birth: ${player.dateOfBirth}</p>
-        <p class="card-text">Experience: ${player.experience}</p>
-        <p class="card-text">Position: ${player.position}</p>
+        <p class="card-text">ID Player: <span th:text="*{id}"></span></p>
+        <p class="card-text">Name: <span th:text="*{name}"></span></p>
+        <p class="card-text">Date Of Birth: <span th:text="*{dateOfBirth}"></span></p>
+        <p class="card-text">Experience: <span th:text="*{experience}"></span></p>
+        <p class="card-text">Position: <span th:text="*{position}"></span></p>
+        <p class="card-text">Position: <span th:text="*{teams}"></span></p>
     </div>
 </div>
 <footer th:replace="/layout :: footer"></footer>
