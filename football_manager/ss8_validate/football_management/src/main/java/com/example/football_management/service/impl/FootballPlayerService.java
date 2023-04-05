@@ -1,10 +1,8 @@
 package com.example.football_management.service.impl;
 
-import com.example.football_management.dto.FootballPlayerDTO;
 import com.example.football_management.model.FootballPlayer;
 import com.example.football_management.repository.IFootballPlayerRepository;
 import com.example.football_management.service.IFootballPlayerService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,10 +28,7 @@ public class FootballPlayerService implements IFootballPlayerService {
     }
 
     @Override
-    public void create(FootballPlayerDTO footballPlayerDTO) {
-        FootballPlayer footballPlayer = new FootballPlayer();
-        footballPlayer.setTeams(footballPlayerRepository.findById(footballPlayerDTO.getId()).get().getTeams());
-        BeanUtils.copyProperties(footballPlayerDTO, footballPlayer);
+    public void create(FootballPlayer footballPlayer) {
         this.footballPlayerRepository.save(footballPlayer);
     }
 

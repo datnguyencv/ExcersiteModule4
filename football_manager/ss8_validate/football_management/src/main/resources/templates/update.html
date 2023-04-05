@@ -23,25 +23,21 @@
     <label for="name"></label>
     <input type="text"
            class="form-control" th:field="*{name}" id="name" aria-describedby="helpId" placeholder="Please enter name">
-    <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 </div>
 <div class="form-group">
     <label for="name"></label>
     <input type="text"
            class="form-control" th:field="*{dateOfBirth}" id="dateOfBirth" aria-describedby="helpId" placeholder="Please enter Date of birth">
-    <p style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
 </div>
 <div class="form-group">
     <label for="name"></label>
     <input type="text"
            class="form-control" th:field="*{experience}" id="experience" aria-describedby="helpId" placeholder="Please enter Experience">
-    <p style="color: red" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></p>
 </div>
 <div class="form-group">
     <label for="name"></label>
     <input type="text"
            class="form-control" th:field="*{position}" id="position" aria-describedby="helpId" placeholder="Please enter Position">
-    <p style="color: red" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></p>
 </div>
 <div class="form-group">
     <label  class="form-label">Team</label>
@@ -53,7 +49,6 @@
     <label for="name"></label>
     <input type="text"
            class="form-control" th:field="*{img}" id="img" aria-describedby="helpId" placeholder="Please enter Url-Avatar">
-    <p style="color: red" th:if="${#fields.hasErrors('img')}" th:errors="*{img}"></p>
 </div>
     <button type="submit" class="btn btn-primary" th:href="@{/football-management/}" >Update</button>
 </form>

@@ -1,6 +1,5 @@
 package com.example.football_management.controller;
 
-import com.example.football_management.dto.FootballPlayerDTO;
 import com.example.football_management.model.FootballPlayer;
 import com.example.football_management.service.IFootballPlayerService;
 import com.example.football_management.service.ITeamsService;
@@ -10,8 +9,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -81,30 +78,10 @@ class FootballPlayerController {
     }
 
     @PostMapping("/create")
-    public String createPlayer(
-            @RequestParam(required = false, defaultValue = "") String nameSearch,
-            @Validated @ModelAttribute("footballPlayer") FootballPlayerDTO footballPlayerDTO,
-            BindingResult bindingResult,
-            RedirectAttributes redirectAttributes, Model model,
-            @RequestParam(required = false) Integer pageSizeInput,
-            @PageableDefault(size = 5) Pageable pageable) {
-        int pageSize = pageable.getPageSize();
-        if (pageSizeInput != null && pageSizeInput > 0) {
-            pageSize = pageSizeInput;
-        }
-
-        Sort sort = nameSearch.isEmpty() ? Sort.by("dateOfBirth").ascending() : Sort.by("name").ascending();
-        Page<FootballPlayer> footballPlayerPage;
-        if (bindingResult.hasErrors()) {
-            footballPlayerPage = footballPlayerService.findAllByNames(
-                    nameSearch, PageRequest.of(pageable.getPageNumber(), pageSize, sort));
-            model.addAttribute("footballPlayerList", footballPlayerPage);
-
-        } else {
-            footballPlayerService.create(footballPlayerDTO);
-            redirectAttributes.addFlashAttribute("message", "Player created successfully");
-        }
-           return "redirect:/";
+    public String createPlayer(@ModelAttribute("footballPlayer") FootballPlayer footballPlayer, RedirectAttributes redirectAttributes) {
+        footballPlayerService.create(footballPlayer);
+        redirectAttributes.addFlashAttribute("message", "Player created successfully");
+        return "redirect:/";
     }
 
     @GetMapping("/update/{id}")
