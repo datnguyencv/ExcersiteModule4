@@ -6,6 +6,7 @@ import com.example.football_management.model.FootballPlayer;
 import com.example.football_management.service.IFootballPlayerService;
 import com.example.football_management.service.ITeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.Cookie;
 import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,12 +19,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
+@SessionAttributes("favourites")
 @RequestMapping("/football-management")
 class FootballPlayerController {
 
@@ -31,6 +34,11 @@ class FootballPlayerController {
     private IFootballPlayerService footballPlayerService;
     @Autowired
     private ITeamsService teamsService;
+
+    @ModelAttribute("favourites")
+    public List<FootballPlayer> getFavourites(){
+        return new ArrayList<>();
+    }
 
     @GetMapping("")
     public String getHome(Model model,
@@ -99,6 +107,10 @@ class FootballPlayerController {
     @GetMapping("/detail/{id}")
     public String detailPlayer(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("player", footballPlayerService.findById(id));
+        Cookie cookie = new Cookie("favourites", player + "");
+        cookie.setMaxAge(1 * 24 * 60 * 60);
+        response.addCookie(cookie);
+        model.addAttribute("player", player);
         return "/detail";
     }
 
