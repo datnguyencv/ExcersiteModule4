@@ -71,8 +71,8 @@
             <td th:text="${player.getExperience()}"></td>
             <td th:text="${player.getPosition()}"></td>
             <td th:text="${player.getTeams()?.getName()}"></td>
-            <td><img th:src="${player.getImg()}" th:height="200px" alt="None">
             <td th:text="${player.getStatus()}"></td>
+            <td><img th:src="${player.getImg()}" th:height="200px" alt="None">
             <td>
                 <a th:href="@{/football-management/update/{id}(id=${player.getId()})}">
                     <button class="btn btn-primary btn-sm">Update</button>

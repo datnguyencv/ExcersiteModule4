@@ -23,7 +23,7 @@ public class LogAOP {
     public void printUpdate(FootballPlayerDTO footballPlayerDTO) {
         int count = 0;
         for (FootballPlayer footballPlayer : footballPlayerService.findAll()) {
-            if (footballPlayer.isStatus() == true) {
+            if (footballPlayer.getStatus()) {
                 count++;
             }
         }

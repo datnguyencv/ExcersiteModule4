@@ -67,14 +67,14 @@ public class FootballPlayerRestfull {
         }
 
         List<FootballPlayer> content = footballPlayerPage.getContent();
-        return ResponseEntity.ok(content);
+            return ResponseEntity.ok(content);
     }
 
-    @GetMapping("/teams")
-    public ResponseEntity<List<Teams>> getAllTeams() {
-        List<Teams> teams = teamsService.findAll();
-        return ResponseEntity.ok(teams);
-    }
+        @GetMapping("/teams")
+        public ResponseEntity<Iterable<Teams>> getAllTeams() {
+            Iterable<Teams> teams = teamsService.findAll();
+            return ResponseEntity.ok(teams);
+        }
 
     @GetMapping("/{id}")
     public ResponseEntity<FootballPlayer> getPlayerById(@PathVariable Integer id) {

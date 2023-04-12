@@ -94,7 +94,7 @@ public class FootballPlayer {
         this.img = img;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
