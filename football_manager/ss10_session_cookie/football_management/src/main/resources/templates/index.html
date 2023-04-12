@@ -46,52 +46,81 @@
 </span>
 
     <p th:text="${message}" style="color: red"></p>
-    <table class="table table-striped table-bordered table-hover">
-        <thead>
-        <tr>
-            <th>STT</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Date Of Birth</th>
-            <th>Experience</th>
-            <th>Position</th>
-            <th>Team</th>
-            <th>Register Player</th>
-            <th>Avatar</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="player, count:${footballPlayerList}">
-            <td th:text="${count.count}"></td>
-            <td th:text="${player.getId()}"></td>
-            <td th:text="${player.getName()}"></td>
-            <td th:text="${player.getDateOfBirth()}"></td>
-            <td th:text="${player.getExperience()}"></td>
-            <td th:text="${player.getPosition()}"></td>
-            <td th:text="${player.getTeams()?.getName()}"></td>
-            <td th:text="${player.status}"></td>
-            <td><img th:src="${player.getImg()}" th:height="200px" alt="None">
-            <td>
-                <a th:href="@{/football-management/update/{id}(id=${player.getId()})}">
-                    <button class="btn btn-primary btn-sm">Update</button>
-                </a>
-            </td>
-            <td>
-                <button type="button" th:attr="onclick=|info('${player.getId()}','${player.getName()}')|"
-                        class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Delete
-                </button>
-            </td>
-            <td>
-                <a th:href="@{/football-management/detail/{id}(id=${player.getId()})}">
-                    <button type="submit" class="btn btn-secondary btn-sm">Detail</button>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<!--    <table class="table table-striped table-bordered table-hover">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>STT</th>-->
+<!--            <th>Id</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Date Of Birth</th>-->
+<!--            <th>Experience</th>-->
+<!--            <th>Position</th>-->
+<!--            <th>Team</th>-->
+<!--            <th>Register Player</th>-->
+<!--            <th>Avatar</th>-->
+<!--            <th></th>-->
+<!--            <th></th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="player, count:${footballPlayerList}">-->
+<!--            <td th:text="${count.count}"></td>-->
+<!--            <td th:text="${player.getId()}"></td>-->
+<!--            <td th:text="${player.getName()}"></td>-->
+<!--            <td th:text="${player.getDateOfBirth()}"></td>-->
+<!--            <td th:text="${player.getExperience()}"></td>-->
+<!--            <td th:text="${player.getPosition()}"></td>-->
+<!--            <td th:text="${player.getTeams()?.getName()}"></td>-->
+<!--            <td th:text="${player.status}"></td>-->
+<!--            <td><img th:src="${player.getImg()}" th:height="200px" alt="None">-->
+<!--            <td>-->
+<!--                <a th:href="@{/football-management/update/{id}(id=${player.getId()})}">-->
+<!--                    <button class="btn btn-primary btn-sm">Update</button>-->
+<!--                </a>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <button type="button" th:attr="onclick=|info('${player.getId()}','${player.getName()}')|"-->
+<!--                        class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--                    Delete-->
+<!--                </button>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <a th:href="@{/football-management/detail/{id}(id=${player.getId()})}">-->
+<!--                    <button type="submit" class="btn btn-secondary btn-sm">Detail</button>-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" th:each="player : ${footballPlayerList}">
+                <div class="card">
+                    <img style="width: 100%; height: 50%" class="card-img-top" th:src="${player.img}"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${player.name}"></h5>
+                        <span> Id: </span>
+                        <span class="card-text" th:text="${player.id}"></span><br>
+                        <span> Date Of Birth: </span>
+                        <span class="card-text" th:text="${player.dateOfBirth}"></span><br>
+                        <span> Experience: </span>
+                        <span class="card-text" th:text="${player.experience}"></span>
+                        <span> year </span><br>
+                        <span> Position: </span>
+                        <span class="card-text" th:text="${player.position}"></span><br>
+                        <span> Team: </span>
+                        <span class="card-text" th:text="${player.teams.name}"></span><br>
+                        <span> Register play: </span>
+                        <span class="card-text" th:text="${player.status}"></span><br>
+                        <a th:href="@{/football-management/detail/{id}(id=${player.getId()})}" class="btn btn-primary btn-sm">Detail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="text-center" id="random1">
         <a class="page-item btn btn-dark active1" th:if="${footballPlayerList.hasPrevious()}"
            th:href="@{/football-management(page = ${footballPlayerList.number - 1}, name = ${nameSearch}, pageSizeInput=${pageSize})}">

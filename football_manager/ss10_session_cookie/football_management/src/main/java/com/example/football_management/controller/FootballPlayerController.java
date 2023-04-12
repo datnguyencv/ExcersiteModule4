@@ -6,7 +6,6 @@ import com.example.football_management.model.FootballPlayer;
 import com.example.football_management.service.IFootballPlayerService;
 import com.example.football_management.service.ITeamsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.server.Cookie;
 import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -105,12 +106,13 @@ class FootballPlayerController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detailPlayer(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("player", footballPlayerService.findById(id));
+    public String detailPlayer(@PathVariable("id") int id, Model model, HttpServletResponse response) {
+        FootballPlayer player = footballPlayerService.findById(id);
+        model.addAttribute("player", player);
         Cookie cookie = new Cookie("favourites", player + "");
         cookie.setMaxAge(1 * 24 * 60 * 60);
         response.addCookie(cookie);
-        model.addAttribute("player", player);
+
         return "/detail";
     }
 
@@ -119,6 +121,23 @@ class FootballPlayerController {
         this.footballPlayerService.delete(footballPlayer);
         redirectAttributes.addFlashAttribute("message", "Player deleted successfully");
         return "redirect:/";
+    }
+
+    @GetMapping("/favourites")
+    public String favourites(@RequestParam() int id, @ModelAttribute("playerFavourites") List<FootballPlayer> footballPlayerList
+            , RedirectAttributes redirectAttributes, Model model) {
+        FootballPlayer player = footballPlayerService.findById(id);
+        model.addAttribute("player", player);
+        footballPlayerList.add(player);
+        redirectAttributes.addFlashAttribute("msg", "Added player to favourites successfully");
+        return "redirect:/football-management";
+    }
+
+    @GetMapping("/favourite-list")
+    public String listPlayerFavourites(@ModelAttribute("playerFavourites") List<FootballPlayer> footballPlayerList
+            , Model model) {
+        model.addAttribute("favouritesList", footballPlayerList);
+        return "/favourites";
     }
 
     private void extractedShow(Model model, String nameSearch, LocalDate from, LocalDate to, Integer pageSizeInput, Pageable pageable) {
